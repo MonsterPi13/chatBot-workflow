@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { X, FilePenLineIcon, CheckCircle2Icon, GhostIcon, CopyPlusIcon } from 'lucide-vue-next'
-import Button from './components/ui/button/Button.vue'
+import Button from '@/components/ui/button/Button.vue'
+import { Tabs, TabsTrigger, TabsContent, TabsList } from '@/components/ui/tabs'
 </script>
 
 <template>
   <div class="absolute bottom-0 left-0 right-0 top-0">
     <div class="relative flex h-full w-full flex-col">
-      <header class="h-16 border-b border-gray-200 px-4 py-3">
-        <div class="flex items-center justify-between">
+      <header class="h-20 border-b border-gray-200 px-4 py-3">
+        <div class="flex h-full items-center justify-between">
           <div class="flex gap-x-3">
             <Button variant="ghost">
               <X class="h-4 w-4" />
@@ -46,7 +47,22 @@ import Button from './components/ui/button/Button.vue'
           </div>
         </div>
       </header>
-      <main class="flex-1"></main>
+      <main class="relative flex h-full w-full flex-1">
+        <div class="w-96 bg-slate-50">
+          <tabs default-value="basic-nodes">
+            <tabs-list class="grid w-full grid-cols-3">
+              <tabs-trigger value="basic-nodes"> Basic Nodes </tabs-trigger>
+              <tabs-trigger value="plugins"> Plugins </tabs-trigger>
+              <tabs-trigger value="workflows"> Workflows </tabs-trigger>
+            </tabs-list>
+            <tabs-content value="basic-nodes"> basic-nodes </tabs-content>
+
+            <tabs-content value="plugins"> plugins </tabs-content>
+
+            <tabs-content value="workflows"> workflows </tabs-content>
+          </tabs>
+        </div>
+      </main>
     </div>
   </div>
 </template>
