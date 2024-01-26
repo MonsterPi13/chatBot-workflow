@@ -14,9 +14,6 @@ dependencies:
   clsx:
     specifier: ^2.1.0
     version: registry.npmmirror.com/clsx@2.1.0
-  lucide-react:
-    specifier: ^0.315.0
-    version: registry.npmmirror.com/lucide-react@0.315.0(react@18.2.0)
   lucide-vue-next:
     specifier: ^0.315.0
     version: registry.npmmirror.com/lucide-vue-next@0.315.0(vue@3.4.15)
@@ -2633,17 +2630,6 @@ packages:
     dependencies:
       yallist: registry.npmmirror.com/yallist@4.0.0
     dev: true
-
-  registry.npmmirror.com/lucide-react@0.315.0(react@18.2.0):
-    resolution: {integrity: sha512-HHPhBRuubJLTERwI3czCgHCrYEtQSuUnniBwR/YHH4rNZXeqtOxyEX05lxpyTxlDr/ugKE+MM9/pWy+iju7xpw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lucide-react/-/lucide-react-0.315.0.tgz}
-    id: registry.npmmirror.com/lucide-react/0.315.0
-    name: lucide-react
-    version: 0.315.0
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: registry.npmmirror.com/react@18.2.0
-    dev: false
 
   registry.npmmirror.com/lucide-vue-next@0.315.0(vue@3.4.15):
     resolution: {integrity: sha512-+o0otyZCBwIPQTTFWxaZWhC39tdRzGFiUoZDE2/Tr/zEAPqY9OczVlCg1Iv3G/quU/RvYKL+NRBbVH11YBL7dw==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lucide-vue-next/-/lucide-vue-next-0.315.0.tgz}
