@@ -1,7 +1,16 @@
 <script setup lang="ts">
-import { X, FilePenLineIcon, CheckCircle2Icon, GhostIcon, CopyPlusIcon } from 'lucide-vue-next'
+import { X, FilePenLineIcon, CheckCircle2Icon, GhostIcon, CopyPlusIcon, PlusIcon } from 'lucide-vue-next'
 import Button from '@/components/ui/button/Button.vue'
 import { Tabs, TabsTrigger, TabsContent, TabsList } from '@/components/ui/tabs'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import mainCanvas from '@/components/main-canvas.vue'
+
+function handleOnDragStart(event: DragEvent, nodeType: any) {
+  if (event.dataTransfer) {
+    event.dataTransfer.setData('application/vueflow', nodeType)
+    event.dataTransfer.effectAllowed = 'move'
+  }
+}
 </script>
 
 <template>
@@ -55,12 +64,52 @@ import { Tabs, TabsTrigger, TabsContent, TabsList } from '@/components/ui/tabs'
               <tabs-trigger value="plugins"> Plugins </tabs-trigger>
               <tabs-trigger value="workflows"> Workflows </tabs-trigger>
             </tabs-list>
-            <tabs-content value="basic-nodes"> basic-nodes </tabs-content>
+            <tabs-content value="basic-nodes">
+              <scroll-area class="h-full w-full">
+                <div
+                  class="mx-6 mb-6 cursor-grab rounded-md bg-white p-6 shadow-md"
+                  :draggable="true"
+                  @dragstart="handleOnDragStart($event, 'LLM')"
+                >
+                  <div class="flex items-center justify-between">
+                    <h3 class="flex items-center gap-x-1">
+                      <img src="@/assets/images/icon_LLM.png" class="h-4 w-4" alt="LLM icon" />
+                      LLM
+                    </h3>
+                    <plus-icon class="text-primary" />
+                  </div>
+                  <p class="mt-2 text-sm text-gray-400">
+                    Invoke the large language model, <br />
+                    generate responses using variables and prompt words.
+                  </p>
+                </div>
+                <div
+                  class="mx-6 mb-6 cursor-grab rounded-md bg-white p-6 shadow-md"
+                  :draggable="true"
+                  @dragstart="handleOnDragStart($event, 'LLM')"
+                >
+                  <div class="flex items-center justify-between">
+                    <h3 class="flex items-center gap-x-1">
+                      <img src="@/assets/images/icon_code.png" class="h-4 w-4" alt="LLM icon" />
+                      Code
+                    </h3>
+                    <plus-icon class="text-primary" />
+                  </div>
+                  <p class="mt-2 text-sm text-gray-400">
+                    Write code to process input variables <br />
+                    to generate return values.
+                  </p>
+                </div>
+              </scroll-area>
+            </tabs-content>
 
             <tabs-content value="plugins"> plugins </tabs-content>
 
             <tabs-content value="workflows"> workflows </tabs-content>
           </tabs>
+        </div>
+        <div class="relative h-full flex-1 overflow-hidden">
+          <main-canvas />
         </div>
       </main>
     </div>

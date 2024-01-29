@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.0.2",
+    "@vue-flow/controls": "^1.1.0",
+    "@vue-flow/core": "^1.29.2",
+    "@vueuse/core": "^10.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-vue-next": "^0.315.0",
