@@ -90,7 +90,7 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
                 >
                   <div class="flex items-center justify-between">
                     <h3 class="flex items-center gap-x-1">
-                      <img src="~@/assets/images/icon_code.png" class="h-4 w-4" alt="LLM icon" />
+                      <img src="~@/assets/images/icon_Code.png" class="h-4 w-4" alt="LLM icon" />
                       Code
                     </h3>
                     <plus-icon class="text-primary" />
