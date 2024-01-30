@@ -14,26 +14,7 @@ function getId() {
   return `dndnode_${id++}`
 }
 
-const { findNode, addNodes, project, vueFlowRef } = useVueFlow({
-  nodes: [
-    { id: '1', type: 'input', label: 'Node 1', position: { x: 250, y: 5 } },
-    { id: '2', label: 'Node 2', position: { x: 100, y: 100 } },
-    { id: '3', type: 'output', label: 'Node 3', position: { x: 400, y: 200 } },
-    {
-      id: '4',
-      type: 'LLM',
-      label: 'Node 4',
-      position: { x: 400, y: 200 },
-      data: {
-        title: 'LLM'
-      }
-    }
-  ],
-  edges: [
-    { id: 'e1-3', source: '1', target: '3' },
-    { id: 'e1-2', source: '1', target: '2', animated: true }
-  ]
-})
+const { findNode, addNodes, project, vueFlowRef } = useVueFlow()
 
 function handleOnDrop(event: DragEvent) {
   const type = event.dataTransfer?.getData('application/vueflow')

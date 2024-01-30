@@ -1,29 +1,22 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Handle, Position, useVueFlow } from '@vue-flow/core'
-import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar'
-import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import { Input } from '@/components/ui/input'
 import { MoreHorizontalIcon } from 'lucide-vue-next'
+import { Handle, Position } from '@vue-flow/core'
+import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar'
+import { Input } from '@/components/ui/input'
+
+import CommonBasicModule from '../common-basic-module.vue'
+import CommonInputModule from '../common-input-module.vue'
+import CommonPromptModule from '../common-prompt-module.vue'
+import commonOutputModule from '../common-output-module.vue'
 
 import { LLMNodeData, LLMNodeEvents } from './index'
 
 import type { NodeProps } from '@vue-flow/core'
 
-const { findNode } = useVueFlow()
 const props = defineProps<NodeProps<LLMNodeData, LLMNodeEvents>>()
 
-const form = ref({
-  title: '',
-  model: '',
-  temperature: ''
-})
-console.log('ssss')
-
-function updateNode(title: string) {
-  // TODO: update node data
-  isEditTitle.value = false
-}
+const title = ref(props.data.title)
 
 const isEditTitle = ref(false)
 </script>
@@ -36,8 +29,8 @@ const isEditTitle = ref(false)
         <div class="flex gap-x-2">
           <img src="@/assets/images/icon_LLM.png" class="mt-1 h-4 w-4" alt="LLM icon" />
           <div class="flex flex-col gap-y-1">
-            <Input v-model="form.title" class="h-5" v-if="isEditTitle" @blur="updateNode" />
-            <h3 class="text-base" v-else>{{ form.title }}</h3>
+            <Input v-model="title" class="h-5" v-if="isEditTitle" />
+            <h3 class="text-base" v-else>{{ title }}</h3>
 
             <p class="text-sm text-gray-500">LLM</p>
           </div>
@@ -61,17 +54,12 @@ const isEditTitle = ref(false)
         >Invoke the large language model, generate responses using variables and prompt words.</span
       >
 
-      <Tabs default-value="single-time">
-        <tabs-list class="grid w-full grid-cols-2">
-          <tabs-trigger value="single-time"> Single time </tabs-trigger>
-          <tabs-trigger value="batch-processing"> Batch processing </tabs-trigger>
-        </tabs-list>
-        <tabs-content value="single-time">
-          <div class="flex divide-x-2 bg-gray-400"></div>
-        </tabs-content>
-
-        <tabs-content value="batch-processing"> Batch Processing </tabs-content>
-      </Tabs>
+      <div class="grid gap-y-3">
+        <common-basic-module />
+        <common-input-module />
+        <common-prompt-module />
+        <common-output-module />
+      </div>
     </div>
     <Handle type="source" :position="Position.Right" />
   </div>
