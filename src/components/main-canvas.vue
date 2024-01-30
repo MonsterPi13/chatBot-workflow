@@ -64,11 +64,11 @@ function handleOnDragOver(event: DragEvent) {
 <template>
   <div class="relative h-full w-full" @drop="handleOnDrop" @dragover="handleOnDragOver">
     <VueFlow v-model="elements">
+      <Controls />
+
       <template #node-LLM="LLMNodeProps">
         <LLMNode v-bind="LLMNodeProps" />
       </template>
-
-      <Controls />
     </VueFlow>
   </div>
 </template>
