@@ -27,7 +27,7 @@ const isEditTitle = ref(false)
     <div class="flex flex-col gap-y-4">
       <div class="flex justify-between">
         <div class="flex gap-x-2">
-          <img src="@/assets/images/icon_LLM.png" class="mt-1 h-4 w-4" alt="LLM icon" />
+          <img src="~@/assets/images/icon_LLM.png" class="mt-1 h-4 w-4" alt="LLM icon" />
           <div class="flex flex-col gap-y-1">
             <Input v-model="title" class="h-5" v-if="isEditTitle" />
             <h3 class="text-base" v-else>{{ title }}</h3>
