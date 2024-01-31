@@ -1,22 +1,73 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
+import { ChevronsUpDownIcon, PlusIcon, AlertCircleIcon, MinusCircleIcon } from 'lucide-vue-next'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
-import { ChevronsUpDownIcon, PlusIcon, AlertCircleIcon, MinusCircleIcon } from 'lucide-vue-next'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectLabel
+} from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
+import { useNode, useVueFlow } from '@vue-flow/core'
 
 type InputItem = {
   name: string
+  type: 'reference' | 'input'
   value: string
+}
+
+type Option = {
+  groupName: string
+  options: {
+    label: string
+    value: string
+  }[]
 }
 
 const isOpen = ref(true)
 const data = ref<InputItem[]>([])
 
+const referenceOptions = ref<Option[]>([])
+
+const node = useNode()
+const { findNode } = useVueFlow()
+watchEffect(() => {
+  if (node.connectedEdges && node.connectedEdges.value.length > 0) {
+    const filteredEdges = node.connectedEdges.value.filter((item) => item.target === node.id)
+    referenceOptions.value = filteredEdges.map((edge) => {
+      const node = findNode(edge.source)
+      const currentItem: Option = {
+        groupName: node?.data.title ?? node?.label,
+        options: []
+      }
+
+      if (node?.data.output) {
+        node?.data.output
+          .filter((item: any) => Boolean(item.name))
+          .forEach((option: any) => {
+            currentItem.options.push({
+              label: option.name,
+              value: option.name
+            })
+          })
+      } else {
+        currentItem.options = []
+      }
+      return currentItem
+    })
+  }
+})
+
 function handleOnClickAddBtnInInput(e: Event) {
   e.stopPropagation()
-  data.value.push({ name: '', value: '' })
+  data.value.push({ name: '', type: 'reference', value: '' })
 }
 
 function handleClickDeleteBtnInInput(index: number) {
@@ -53,15 +104,42 @@ function handleClickDeleteBtnInInput(index: number) {
       </collapsible-trigger>
       <collapsible-content class="space-y-3 px-3 py-3">
         <div class="flex gap-x-4">
-          <Label class="w-2/5 text-sm text-muted-foreground">Name</Label>
-          <Label class="w-3/5 text-sm text-muted-foreground">Value</Label>
+          <Label class="w-3/12 text-sm text-muted-foreground">Name</Label>
+          <Label class="w-3/12 text-sm text-muted-foreground">Type</Label>
+          <Label class="w-6/12 text-sm text-muted-foreground">Value</Label>
         </div>
         <div class="flex gap-x-4" v-for="(item, index) in data" :key="index">
-          <div class="w-2/5">
-            <Input v-model="item.name" placeholder="Enter the name" />
+          <div class="w-3/12">
+            <Input v-model="item.name" placeholder="Enter name" />
           </div>
-          <div class="flex w-3/5 cursor-pointer items-center gap-x-2 text-primary">
-            <Input v-model="item.value" placeholder="Enter value" />
+          <div class="w-3/12">
+            <Select v-model="item.type">
+              <SelectTrigger class="w-full">
+                <SelectValue placeholder="Select Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="reference"> Reference </SelectItem>
+                  <SelectItem value="input"> Input </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+          <div class="flex w-6/12 cursor-pointer items-center gap-x-2">
+            <Select v-if="item.type === 'reference'" v-model="item.value">
+              <SelectTrigger class="w-full">
+                <SelectValue placeholder="please select" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup v-for="(group, index) in referenceOptions" :key="index">
+                  <SelectLabel>{{ group.groupName }}</SelectLabel>
+                  <SelectItem v-for="option in group.options" :key="option.value" :value="option.value">
+                    {{ option.label }}
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+            <Input v-model="item.value" placeholder="Enter value" v-else />
             <minus-circle-icon class="h-4 w-4" @click="() => handleClickDeleteBtnInInput(index)" />
           </div>
         </div>

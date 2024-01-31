@@ -4,6 +4,7 @@ import { AlertCircleIcon } from 'lucide-vue-next'
 import { Select, SelectValue, SelectTrigger, SelectContent, SelectItem, SelectGroup } from '@/components/ui/select'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 
 const data = ref({
   model: '',

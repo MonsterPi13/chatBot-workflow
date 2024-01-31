@@ -1,20 +1,43 @@
 <script setup lang="ts">
-import { nextTick, ref, watch } from 'vue'
+import { markRaw, nextTick, ref, watch } from 'vue'
 import { VueFlow, useVueFlow } from '@vue-flow/core'
 import { Controls } from '@vue-flow/controls'
 
-import LLMNode from '@/components/vue-flow/nodes/LLM.vue'
+import StartNode from '@/components/vue-flow/nodes/start-node.vue'
+import EndNode from '@/components/vue-flow/nodes/end-node.vue'
+import LLMNode from '@/components/vue-flow/nodes/LLM-node.vue'
 
 import type { Dimensions, Elements } from '@vue-flow/core'
 
 const elements = ref<Elements>()
 
-let id = 0
-function getId() {
-  return `dndnode_${id++}`
+const nodeTypes = {
+  start: markRaw(StartNode),
+  end: markRaw(EndNode),
+  LLM: markRaw(LLMNode)
 }
 
-const { findNode, addNodes, project, vueFlowRef } = useVueFlow()
+const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect } = useVueFlow({
+  nodes: [
+    {
+      id: '1',
+      type: 'start',
+      label: 'start',
+      position: { x: 25, y: 400 }
+    },
+    {
+      id: '2',
+      type: 'end',
+      label: 'end',
+      position: { x: 1000, y: 400 }
+    }
+  ]
+})
+
+onConnect((params) => {
+  console.log(params)
+  addEdges(params)
+})
 
 function handleOnDrop(event: DragEvent) {
   const type = event.dataTransfer?.getData('application/vueflow')
@@ -27,7 +50,7 @@ function handleOnDrop(event: DragEvent) {
   })
 
   const newNode = {
-    id: getId(),
+    id: (nodes.value.length + 1).toString(),
     type,
     position,
     label: `${type} node`
@@ -62,13 +85,9 @@ function handleOnDragOver(event: DragEvent) {
 </script>
 
 <template>
-  <div class="relative h-full w-full" @drop="handleOnDrop" @dragover="handleOnDragOver">
-    <VueFlow v-model="elements">
+  <div class="relative h-full w-full" id="main-canvas" @drop="handleOnDrop" @dragover="handleOnDragOver">
+    <VueFlow v-model="elements" :node-types="nodeTypes">
       <Controls />
-
-      <template #node-LLM="LLMNodeProps">
-        <LLMNode v-bind="LLMNodeProps" />
-      </template>
     </VueFlow>
   </div>
 </template>
@@ -77,4 +96,13 @@ function handleOnDragOver(event: DragEvent) {
 @import '@vue-flow/core/dist/style.css';
 @import '@vue-flow/core/dist/theme-default.css';
 @import '@vue-flow/controls/dist/style.css';
+
+#main-canvas {
+  --vf-handle: hsl(var(--primary));
+
+  .vue-flow__handle {
+    width: 18px;
+    height: 18px;
+  }
+}
 </style>
