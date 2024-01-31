@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
+import {  useNode } from '@vue-flow/core'
 import { ChevronsUpDownIcon, PlusIcon, AlertCircleIcon, MinusCircleIcon } from 'lucide-vue-next'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
@@ -21,16 +22,27 @@ type Output = {
   description: string
 }
 
-const isOpen = ref(true)
+const node = useNode()
+
+const isOpen = ref(false)
 const data = ref<Output[]>([])
 
 function handleOnClickAddBtnInInput(e: Event) {
   e.stopPropagation()
+  isOpen.value = true;
   data.value.push({ name: '', type: '', description: '' })
+  node.node.data = {
+    ...node.node.data,
+    output: data
+  }
 }
 
 function handleClickDeleteBtnInInput(index: number) {
   data.value.splice(index, 1)
+  node.node.data = {
+    ...node.node.data,
+    output: data
+  }
 }
 </script>
 
@@ -74,7 +86,7 @@ function handleClickDeleteBtnInInput(index: number) {
           <div class="w-3/12">
             <Select>
               <SelectTrigger class="w-full">
-                <SelectValue placeholder="Select a fruit" />
+                <SelectValue placeholder="Select type" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
