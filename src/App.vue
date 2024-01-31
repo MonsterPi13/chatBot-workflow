@@ -86,7 +86,7 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
                 <div
                   class="mx-6 mb-6 cursor-grab rounded-md bg-white p-6 shadow-md"
                   :draggable="true"
-                  @dragstart="handleOnDragStart($event, 'LLM')"
+                  @dragstart="handleOnDragStart($event, 'code')"
                 >
                   <div class="flex items-center justify-between">
                     <h3 class="flex items-center gap-x-1">

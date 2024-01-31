@@ -6,6 +6,7 @@ import { Controls } from '@vue-flow/controls'
 import StartNode from '@/components/vue-flow/nodes/start-node.vue'
 import EndNode from '@/components/vue-flow/nodes/end-node.vue'
 import LLMNode from '@/components/vue-flow/nodes/LLM-node.vue'
+import CodeNode from '@/components/vue-flow/nodes/code-node.vue'
 
 import type { Dimensions, Elements } from '@vue-flow/core'
 
@@ -14,7 +15,8 @@ const elements = ref<Elements>()
 const nodeTypes = {
   start: markRaw(StartNode),
   end: markRaw(EndNode),
-  LLM: markRaw(LLMNode)
+  LLM: markRaw(LLMNode),
+  code: markRaw(CodeNode)
 }
 
 const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect } = useVueFlow({

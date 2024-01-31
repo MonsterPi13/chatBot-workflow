@@ -1,20 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
-import {  useNode } from '@vue-flow/core'
+import { useNode } from '@vue-flow/core'
 import { ChevronsUpDownIcon, PlusIcon, AlertCircleIcon, MinusCircleIcon } from 'lucide-vue-next'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from '@/components/ui/select'
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
-import {Button} from "@/components/ui/button"
-import {Label} from '@/components/ui/label'
+import { Button } from '@/components/ui/button'
+import { Label } from '@/components/ui/label'
 
 type Output = {
   name: string
@@ -22,14 +15,71 @@ type Output = {
   description: string
 }
 
+const props = withDefaults(
+  defineProps<{
+    data: Output[]
+  }>(),
+  { data: () => [] }
+)
+
+const typesOptions = [
+  {
+    value: 'String',
+    label: 'String'
+  },
+  {
+    value: 'Integer',
+    label: 'Integer'
+  },
+  {
+    value: 'Boolean',
+    label: 'Boolean'
+  },
+  {
+    value: 'Number',
+    label: 'Number'
+  },
+  {
+    value: 'Object',
+    label: 'Object'
+  },
+  {
+    value: 'Array<String>',
+    label: 'Array<String>'
+  },
+  {
+    value: 'Array<Integer>',
+    label: 'Array<Integer>'
+  },
+  {
+    value: 'Array<Boolean>',
+    label: 'Array<Boolean>'
+  },
+  {
+    value: 'Array<Number>',
+    label: 'Array<Number>'
+  },
+  {
+    value: 'Array<Object>',
+    label: 'Array<Object>,'
+  }
+]
+
 const node = useNode()
 
 const isOpen = ref(false)
-const data = ref<Output[]>([])
+const data = ref<Output[]>(props.data)
+if (props.data.length !== 0) {
+  isOpen.value = true
+  node.node.data = {
+    ...node.node.data,
+    output: data
+  }
+}
 
 function handleOnClickAddBtnInInput(e: Event) {
   e.stopPropagation()
-  isOpen.value = true;
+  isOpen.value = true
   data.value.push({ name: '', type: '', description: '' })
   node.node.data = {
     ...node.node.data,
@@ -90,23 +140,16 @@ function handleClickDeleteBtnInInput(index: number) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="String"> String </SelectItem>
-                  <SelectItem value="Integer"> Integer </SelectItem>
-                  <SelectItem value="Boolean"> Boolean </SelectItem>
-                  <SelectItem value="Number"> Number </SelectItem>
-                  <SelectItem value="Object" disabled> Object </SelectItem>
-                  <SelectItem value="Array<String>"> {{'Array<String>'}} </SelectItem>
-                  <SelectItem value="Array<Integer>"> {{'Array<Integer>'}}  </SelectItem>
-                  <SelectItem value="Array<Boolean>">  {{'Array<Boolean>'}}  </SelectItem>
-                  <SelectItem value="Array<Number>">  {{'Array<Number>'}} </SelectItem>
-                  <SelectItem value="Array<Object>" disabled>  {{'Array<Object>'}}  </SelectItem>
+                  <SelectItem v-for="option in typesOptions" :value="option.value" :key="option.value">
+                    {{ option?.label }}</SelectItem
+                  >
                 </SelectGroup>
               </SelectContent>
             </Select>
           </div>
-          <div class="flex w-6/12 cursor-pointer items-center gap-x-2 text-primary">
+          <div class="flex w-6/12 cursor-pointer items-center gap-x-2">
             <Input v-model="item.description" placeholder="Describe what the variable is used for" />
-            <minus-circle-icon class="h-4 w-4" @click="() => handleClickDeleteBtnInInput(index)" />
+            <minus-circle-icon class="h-4 w-4 text-primary" @click="() => handleClickDeleteBtnInInput(index)" />
           </div>
         </div>
       </collapsible-content>

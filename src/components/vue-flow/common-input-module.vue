@@ -67,6 +67,7 @@ watchEffect(() => {
 
 function handleOnClickAddBtnInInput(e: Event) {
   e.stopPropagation()
+  isOpen.value = true
   data.value.push({ name: '', type: 'reference', value: '' })
 }
 
@@ -131,12 +132,13 @@ function handleClickDeleteBtnInInput(index: number) {
                 <SelectValue placeholder="please select" />
               </SelectTrigger>
               <SelectContent>
-                <SelectGroup v-for="(group, index) in referenceOptions" :key="index">
+                <SelectGroup v-for="(group, index) in referenceOptions" :key="index" v-if="referenceOptions.length > 0">
                   <SelectLabel>{{ group.groupName }}</SelectLabel>
                   <SelectItem v-for="option in group.options" :key="option.value" :value="option.value">
                     {{ option.label }}
                   </SelectItem>
                 </SelectGroup>
+                <p class="px-2 text-muted-foreground" v-else>no items</p>
               </SelectContent>
             </Select>
             <Input v-model="item.value" placeholder="Enter value" v-else />
