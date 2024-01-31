@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { Handle, Position } from '@vue-flow/core'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
@@ -7,20 +6,8 @@ import commonInputModule from '../common-input-module.vue'
 
 import type { NodeProps } from '@vue-flow/core'
 import { LLMNodeData, LLMNodeEvents } from './index'
-import type { Input } from '../start-input-module.vue'
 
 defineProps<NodeProps<LLMNodeData, LLMNodeEvents>>()
-
-const data = ref<Input[]>([])
-
-function handleClickAddBtn() {
-  data.value.push({
-    name: '',
-    description: '',
-    type: '',
-    isRequired: true
-  })
-}
 </script>
 
 <template>
