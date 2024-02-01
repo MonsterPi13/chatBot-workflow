@@ -9,6 +9,7 @@ import LLMNode from '@/components/vue-flow/nodes/LLM-node.vue'
 import CodeNode from '@/components/vue-flow/nodes/code-node.vue'
 import KnowledgeNode from '@/components/vue-flow/nodes/knowledge-node.vue'
 import ApiNode from '@/components/vue-flow/nodes/api-node.vue'
+import { Test_data } from '@/lib/constant'
 
 import type { Dimensions, Elements } from '@vue-flow/core'
 
@@ -23,22 +24,23 @@ const nodeTypes = {
   api: markRaw(ApiNode)
 }
 
-const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect } = useVueFlow({
-  nodes: [
-    {
-      id: '1',
-      type: 'start',
-      label: 'start',
-      position: { x: 25, y: 400 }
-    },
-    {
-      id: '2',
-      type: 'end',
-      label: 'end',
-      position: { x: 1000, y: 400 }
-    }
-  ]
-})
+const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect, setNodes, setEdges, setTransform } =
+  useVueFlow({
+    nodes: [
+      {
+        id: '1',
+        type: 'start',
+        label: 'start',
+        position: { x: 25, y: 400 }
+      },
+      {
+        id: '2',
+        type: 'end',
+        label: 'end',
+        position: { x: 1000, y: 400 }
+      }
+    ]
+  })
 
 onConnect((params) => {
   console.log(params)
@@ -47,6 +49,14 @@ onConnect((params) => {
 
 function handleOnDrop(event: DragEvent) {
   const type = event.dataTransfer?.getData('application/vueflow')
+  if (type === 'workflow') {
+    const { nodes, edges, position, zoom } = Test_data
+    const [x = 0, y = 0] = position
+    setNodes(nodes)
+    setEdges(edges)
+    setTransform({ x, y, zoom: zoom || 0 })
+    return
+  }
 
   const { left, top } = vueFlowRef.value!.getBoundingClientRect()
 

@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { PlusIcon } from 'lucide-vue-next'
+import { PlusIcon, GhostIcon } from 'lucide-vue-next'
+import { useVueFlow } from '@vue-flow/core'
+import { useClipboard } from '@vueuse/core'
+
 import { Tabs, TabsTrigger, TabsContent, TabsList } from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import mainCanvas from '@/components/main-canvas.vue'
+import { Button } from '@/components/ui/button'
+import { Toaster, useToast } from '@/components/ui/toast'
 
 function handleOnDragStart(event: DragEvent, nodeType: any) {
   if (event.dataTransfer) {
@@ -10,50 +15,48 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
     event.dataTransfer.effectAllowed = 'move'
   }
 }
+
+const { toObject } = useVueFlow()
+const { copy } = useClipboard()
+const { toast } = useToast()
+function handleClickGetData() {
+  copy(JSON.stringify(toObject())).then(() => {
+    toast({
+      title: 'copied success'
+    })
+  })
+}
+
+function handleClickPublishBtn() {
+  toast({
+    title: 'Save Data',
+    description: '1.valid data 2.fetch backend api to save result'
+  })
+}
 </script>
 
 <template>
   <div class="absolute bottom-0 left-0 right-0 top-0">
     <div class="relative flex h-full w-full flex-col">
-      <!-- <header class="h-20 border-b border-gray-200 px-4 py-3">
+      <header class="h-20 border-b border-gray-200 px-4 py-3">
         <div class="flex h-full items-center justify-between">
           <div class="flex gap-x-3">
-            <Button variant="ghost">
-              <X class="h-4 w-4" />
-            </Button>
             <div class="flex items-center gap-x-1">
               <GhostIcon class="w-12 text-red-200" />
               <div class="flex flex-col">
                 <div class="flex items-center gap-x-3">
-                  <p class="text-bold">workflow-name</p>
-                  <Button variant="ghost" size="sm" class="flex h-auto gap-x-1 px-1">
-                    <FilePenLineIcon class="w-3" />
-                    <span class="text-primary"> Edit </span>
-                  </Button>
-                  <div class="flex items-center gap-x-1 px-0">
-                    <CheckCircle2Icon class="w-3 text-green-500" />
-                    <span class="text-xs text-gray-400">Published</span>
-                  </div>
-                </div>
-
-                <div class="flex text-sm text-gray-400">
-                  <span class="mr-2">workflow-name</span>
-                  |
-                  <span class="ml-2">Auto-saved 15:15:15</span>
+                  <p class="text-bold">workflow-test</p>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="flex gap-x-3">
-            <Button variant="outline" size="sm" class="text-blue-800"> Test Run </Button>
-            <Button variant="default" size="sm"> Publish </Button>
-            <Button variant="outline" size="sm">
-              <CopyPlusIcon class="h-4 w-4" />
-            </Button>
+            <Button variant="outline" size="sm" class="text-blue-800" @click="handleClickGetData"> Get Data</Button>
+            <Button variant="default" size="sm" @click="handleClickPublishBtn"> Publish </Button>
           </div>
         </div>
-      </header> -->
+      </header>
       <main class="relative flex h-full w-full flex-1">
         <div class="w-96 bg-slate-50">
           <tabs default-value="basic-nodes">
@@ -140,7 +143,27 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
               </scroll-area>
             </tabs-content>
 
-            <tabs-content value="workflows"> workflows </tabs-content>
+            <tabs-content value="workflows">
+              <scroll-area class="h-[calc(100vh-150px)] w-full">
+                <div
+                  class="mx-6 mb-6 cursor-grab rounded-md bg-white p-6 shadow-md"
+                  :draggable="true"
+                  @dragstart="handleOnDragStart($event, 'workflow')"
+                >
+                  <div class="flex items-center justify-between">
+                    <h3 class="flex items-center gap-x-1">
+                      <GhostIcon class="w-12 text-blue-400" />
+                      test_node
+                    </h3>
+                    <plus-icon class="text-primary" />
+                  </div>
+                  <p class="mt-2 border-b pb-2 text-sm text-gray-400">
+                    This is just test workflow, to init initial data.
+                  </p>
+                  <div class="pt-2 text-xs text-gray-400">Edit Time: 2024-02-01</div>
+                </div>
+              </scroll-area>
+            </tabs-content>
           </tabs>
         </div>
         <div class="relative h-full flex-1 overflow-hidden">
@@ -149,4 +172,5 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
       </main>
     </div>
   </div>
+  <Toaster />
 </template>
