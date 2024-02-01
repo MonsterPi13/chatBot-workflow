@@ -44,7 +44,6 @@ const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect, set
   })
 
 onConnect((params) => {
-  console.log(params)
   addEdges(params)
 })
 
