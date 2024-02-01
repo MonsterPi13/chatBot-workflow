@@ -14,7 +14,7 @@ import type { NodeProps } from '@vue-flow/core'
 defineProps<NodeProps<LLMNodeData, LLMNodeEvents>>()
 
 const node = useNode()
-const { removeNodes, addNodes, nodes, addSelectedNodes } = useVueFlow()
+const { removeNodes, addNodes, nodes } = useVueFlow()
 onMounted(() => {
   node.node.data = {
     ...node.node.data,

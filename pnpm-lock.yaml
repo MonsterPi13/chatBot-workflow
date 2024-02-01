@@ -11,6 +11,9 @@ dependencies:
   '@vee-validate/zod':
     specifier: ^4.12.5
     version: registry.npmmirror.com/@vee-validate/zod@4.12.5(vue@3.4.15)
+  '@vue-flow/background':
+    specifier: ^1.2.0
+    version: registry.npmmirror.com/@vue-flow/background@1.2.0(@vue-flow/core@1.29.2)
   '@vue-flow/controls':
     specifier: ^1.1.0
     version: registry.npmmirror.com/@vue-flow/controls@1.1.0(@vue-flow/core@1.29.2)
@@ -1120,6 +1123,17 @@ packages:
       '@volar/language-core': registry.npmmirror.com/@volar/language-core@1.11.1
       path-browserify: registry.npmmirror.com/path-browserify@1.0.1
     dev: true
+
+  registry.npmmirror.com/@vue-flow/background@1.2.0(@vue-flow/core@1.29.2):
+    resolution: {integrity: sha512-ZqmYhOM/0aRmA5dA3KSHJNYpHnhmG2e6tzjmttoibo4JBI3KNbdyOX+OTlqt7Ic0LYUC6NWzRLAwv4gjJuc6Mg==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue-flow/background/-/background-1.2.0.tgz}
+    id: registry.npmmirror.com/@vue-flow/background/1.2.0
+    name: '@vue-flow/background'
+    version: 1.2.0
+    peerDependencies:
+      '@vue-flow/core': ^1.12.2
+    dependencies:
+      '@vue-flow/core': registry.npmmirror.com/@vue-flow/core@1.29.2(vue@3.4.15)
+    dev: false
 
   registry.npmmirror.com/@vue-flow/controls@1.1.0(@vue-flow/core@1.29.2):
     resolution: {integrity: sha512-zxkQbzt0lUf/Nr0PMJAESUL+uih9Fs0+p9i2VoaLceT1Z2VDNTwK/62MmhrQkg429ggQ7aIBOxUToAWpSIVDkQ==, registry: http://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@vue-flow/controls/-/controls-1.1.0.tgz}

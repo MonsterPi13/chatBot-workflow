@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { markRaw, nextTick, ref, watch } from 'vue'
 import { VueFlow, useVueFlow } from '@vue-flow/core'
+import { Background } from '@vue-flow/background'
 import { Controls } from '@vue-flow/controls'
 
 import StartNode from '@/components/vue-flow/nodes/start-node.vue'
@@ -107,6 +108,7 @@ function handleOnDragOver(event: DragEvent) {
   <div class="relative h-full w-full" id="main-canvas" @drop="handleOnDrop" @dragover="handleOnDragOver">
     <VueFlow v-model="elements" :node-types="nodeTypes">
       <Controls />
+      <Background />
     </VueFlow>
   </div>
 </template>
