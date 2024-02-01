@@ -25,7 +25,7 @@ const nodeTypes = {
   api: markRaw(ApiNode)
 }
 
-const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect, setNodes, setEdges, setTransform } =
+const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect, setNodes, setEdges, setViewport } =
   useVueFlow({
     nodes: [
       {
@@ -55,7 +55,7 @@ function handleOnDrop(event: DragEvent) {
     const [x = 0, y = 0] = position
     setNodes(nodes)
     setEdges(edges)
-    setTransform({ x, y, zoom: zoom || 0 })
+    setViewport({ x, y, zoom: zoom || 0 })
     return
   }
 
