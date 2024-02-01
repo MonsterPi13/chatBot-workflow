@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue'
+import { PropType, ref, watchEffect } from 'vue'
 import { ChevronsUpDownIcon, PlusIcon, AlertCircleIcon, MinusCircleIcon } from 'lucide-vue-next'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@/components/ui/collapsible'
@@ -31,8 +31,34 @@ type Option = {
   }[]
 }
 
+const props = defineProps({
+  staticNameKey: {
+    type: [String, Array] as PropType<string | Array<string>>,
+    default: ''
+  }
+})
+
 const isOpen = ref(true)
 const data = ref<InputItem[]>([])
+watchEffect(() => {
+  if (props.staticNameKey) {
+    if (typeof props.staticNameKey === 'string') {
+      data.value.push({
+        name: props.staticNameKey,
+        type: 'reference',
+        value: ''
+      })
+    } else {
+      props.staticNameKey.forEach((key) => {
+        data.value.push({
+          name: key,
+          type: 'reference',
+          value: ''
+        })
+      })
+    }
+  }
+})
 
 const referenceOptions = ref<Option[]>([])
 
@@ -99,7 +125,11 @@ function handleClickDeleteBtnInInput(index: number) {
             </tooltip-provider>
           </div>
           <Button variant="ghost">
-            <plus-icon class="h-4 w-4 cursor-pointer text-primary" @click="handleOnClickAddBtnInInput" />
+            <plus-icon
+              class="h-4 w-4 cursor-pointer text-primary"
+              @click="handleOnClickAddBtnInInput"
+              v-if="!staticNameKey"
+            />
           </Button>
         </div>
       </collapsible-trigger>
@@ -111,7 +141,8 @@ function handleClickDeleteBtnInInput(index: number) {
         </div>
         <div class="flex gap-x-4" v-for="(item, index) in data" :key="index">
           <div class="w-3/12">
-            <Input v-model="item.name" placeholder="Enter name" />
+            <p v-if="staticNameKey">{{ item.name }}</p>
+            <Input v-model="item.name" placeholder="Enter name" v-else />
           </div>
           <div class="w-3/12">
             <Select v-model="item.type">
@@ -142,7 +173,11 @@ function handleClickDeleteBtnInInput(index: number) {
               </SelectContent>
             </Select>
             <Input v-model="item.value" placeholder="Enter value" v-else />
-            <minus-circle-icon class="h-4 w-4" @click="() => handleClickDeleteBtnInInput(index)" />
+            <minus-circle-icon
+              class="h-4 w-4"
+              @click="() => handleClickDeleteBtnInInput(index)"
+              v-if="!staticNameKey"
+            />
           </div>
         </div>
       </collapsible-content>

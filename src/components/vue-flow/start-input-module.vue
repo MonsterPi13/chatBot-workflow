@@ -34,7 +34,7 @@ function handleClickDeleteBtn() {
         <div class="flex w-full items-center justify-between">
           <div class="flex items-center gap-x-2">
             <chevrons-up-down-icon class="h-4 w-4 cursor-pointer" />
-            <p>Test</p>
+            <p>{{ form.name }}</p>
           </div>
           <Button variant="ghost">
             <minus-circle-icon class="h-4 w-4 cursor-pointer" @click="handleClickDeleteBtn" />

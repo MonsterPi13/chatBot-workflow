@@ -7,6 +7,8 @@ import StartNode from '@/components/vue-flow/nodes/start-node.vue'
 import EndNode from '@/components/vue-flow/nodes/end-node.vue'
 import LLMNode from '@/components/vue-flow/nodes/LLM-node.vue'
 import CodeNode from '@/components/vue-flow/nodes/code-node.vue'
+import KnowledgeNode from '@/components/vue-flow/nodes/knowledge-node.vue'
+import ApiNode from '@/components/vue-flow/nodes/api-node.vue'
 
 import type { Dimensions, Elements } from '@vue-flow/core'
 
@@ -16,7 +18,9 @@ const nodeTypes = {
   start: markRaw(StartNode),
   end: markRaw(EndNode),
   LLM: markRaw(LLMNode),
-  code: markRaw(CodeNode)
+  code: markRaw(CodeNode),
+  knowledge: markRaw(KnowledgeNode),
+  api: markRaw(ApiNode)
 }
 
 const { findNode, nodes, addNodes, addEdges, project, vueFlowRef, onConnect } = useVueFlow({
@@ -55,7 +59,10 @@ function handleOnDrop(event: DragEvent) {
     id: (nodes.value.length + 1).toString(),
     type,
     position,
-    label: `${type} node`
+    label: `${type} node`,
+    data: {
+      title: type
+    }
   }
 
   addNodes([newNode])

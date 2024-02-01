@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { PropType, ref } from 'vue'
 import { useNode } from '@vue-flow/core'
 import { ChevronsUpDownIcon, PlusIcon, AlertCircleIcon, MinusCircleIcon } from 'lucide-vue-next'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
@@ -15,12 +15,12 @@ type Output = {
   description: string
 }
 
-const props = withDefaults(
-  defineProps<{
-    data: Output[]
-  }>(),
-  { data: () => [] }
-)
+const props = defineProps({
+  data: {
+    type: Object as PropType<Output[]>,
+    default: () => []
+  }
+})
 
 const typesOptions = [
   {

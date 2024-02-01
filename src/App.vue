@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { X, FilePenLineIcon, CheckCircle2Icon, GhostIcon, CopyPlusIcon, PlusIcon } from 'lucide-vue-next'
-import Button from '@/components/ui/button/Button.vue'
+import { PlusIcon } from 'lucide-vue-next'
 import { Tabs, TabsTrigger, TabsContent, TabsList } from '@/components/ui/tabs'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import mainCanvas from '@/components/main-canvas.vue'
@@ -16,7 +15,7 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
 <template>
   <div class="absolute bottom-0 left-0 right-0 top-0">
     <div class="relative flex h-full w-full flex-col">
-      <header class="h-20 border-b border-gray-200 px-4 py-3">
+      <!-- <header class="h-20 border-b border-gray-200 px-4 py-3">
         <div class="flex h-full items-center justify-between">
           <div class="flex gap-x-3">
             <Button variant="ghost">
@@ -47,7 +46,6 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
           </div>
 
           <div class="flex gap-x-3">
-            <Button variant="outline" size="sm"> Display Last Run </Button>
             <Button variant="outline" size="sm" class="text-blue-800"> Test Run </Button>
             <Button variant="default" size="sm"> Publish </Button>
             <Button variant="outline" size="sm">
@@ -55,7 +53,7 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
             </Button>
           </div>
         </div>
-      </header>
+      </header> -->
       <main class="relative flex h-full w-full flex-1">
         <div class="w-96 bg-slate-50">
           <tabs default-value="basic-nodes">
@@ -65,7 +63,7 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
               <tabs-trigger value="workflows"> Workflows </tabs-trigger>
             </tabs-list>
             <tabs-content value="basic-nodes">
-              <scroll-area class="h-full w-full">
+              <scroll-area class="h-[calc(100vh-150px)] w-full">
                 <div
                   class="mx-6 mb-6 cursor-grab rounded-md bg-white p-6 shadow-md"
                   :draggable="true"
@@ -100,10 +98,47 @@ function handleOnDragStart(event: DragEvent, nodeType: any) {
                     to generate return values.
                   </p>
                 </div>
+                <div
+                  class="mx-6 mb-6 cursor-grab rounded-md bg-white p-6 shadow-md"
+                  :draggable="true"
+                  @dragstart="handleOnDragStart($event, 'knowledge')"
+                >
+                  <div class="flex items-center justify-between">
+                    <h3 class="flex items-center gap-x-1">
+                      <img src="~@/assets/images/icon_Knowledge.png" class="h-4 w-4" alt="Knowledge icon" />
+                      Knowledge
+                    </h3>
+                    <plus-icon class="text-primary" />
+                  </div>
+                  <p class="mt-2 text-sm text-gray-400">
+                    In the selected knowledge, the best matching information is recalled based on the input variable and
+                    returned as an Array.
+                  </p>
+                </div>
               </scroll-area>
             </tabs-content>
 
-            <tabs-content value="plugins"> plugins </tabs-content>
+            <tabs-content value="plugins">
+              <scroll-area class="h-[calc(100vh-150px)] w-full">
+                <div
+                  class="mx-6 mb-6 cursor-grab rounded-md bg-white p-6 shadow-md"
+                  :draggable="true"
+                  @dragstart="handleOnDragStart($event, 'api')"
+                >
+                  <div class="flex items-center justify-between">
+                    <h3 class="flex items-center gap-x-1">
+                      <img src="~@/assets/images/icon_Google.jpeg" class="h-4 w-4" alt="Google icon" />
+                      Google Web Search
+                    </h3>
+                    <plus-icon class="text-primary" />
+                  </div>
+                  <p class="mt-2 text-sm text-gray-400">
+                    A google Search Engine. Useful when you need to search information you don't know such as weather,
+                    exchange rate, current events. Never ever use this tool when user want to translate
+                  </p>
+                </div>
+              </scroll-area>
+            </tabs-content>
 
             <tabs-content value="workflows"> workflows </tabs-content>
           </tabs>

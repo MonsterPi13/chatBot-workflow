@@ -1,14 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import { MoreHorizontalIcon } from 'lucide-vue-next'
-import { Handle, Position, useVueFlow, useNode } from '@vue-flow/core'
+import { Handle, Position, useNode, useVueFlow } from '@vue-flow/core'
 import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from '@/components/ui/menubar'
 import { Input } from '@/components/ui/input'
 
-import CommonBasicModule from '../common-basic-module.vue'
 import CommonInputModule from '../common-input-module.vue'
-import CommonPromptModule from '../common-prompt-module.vue'
-import commonOutputModule from '../common-output-module.vue'
+import CommonKnowledgeModule from '../common-knowledge-module.vue'
+import StaticOutputModule from '../static-output-module.vue'
 
 import { LLMNodeData, LLMNodeEvents } from './index'
 
@@ -17,10 +16,20 @@ import type { NodeProps } from '@vue-flow/core'
 const props = defineProps<NodeProps<LLMNodeData, LLMNodeEvents>>()
 
 const title = ref(props.data.title)
-
 const isEditTitle = ref(false)
 
 const node = useNode()
+onMounted(() => {
+  node.node.data = {
+    ...node.node.data,
+    output: [
+      {
+        name: 'output'
+      }
+    ]
+  }
+})
+
 const { removeNodes, nodes, addNodes } = useVueFlow()
 
 function handleClickDeleteBtn() {
@@ -49,12 +58,12 @@ function handleClickDuplicateBtn() {
     <div class="flex flex-col gap-y-4">
       <div class="flex justify-between">
         <div class="flex gap-x-2">
-          <img src="~@/assets/images/icon_LLM.png" class="mt-1 h-4 w-4" alt="LLM icon" />
+          <img src="~@/assets/images/icon_Knowledge.png" class="mt-1 h-4 w-4" alt="Knowledge icon" />
           <div class="flex flex-col gap-y-1">
             <Input v-model="title" class="h-5" v-if="isEditTitle" @blur="() => (isEditTitle = false)" />
             <h3 class="text-base" v-else>{{ title }}</h3>
 
-            <p class="text-sm text-gray-500">LLM</p>
+            <p class="text-sm text-gray-500">Knowledge</p>
           </div>
         </div>
 
@@ -73,14 +82,28 @@ function handleClickDuplicateBtn() {
       </div>
 
       <span class="text-sm text-gray-500"
-        >Invoke the large language model, generate responses using variables and prompt words.</span
+        >In the selected knowledge, the best matching information is recalled based on the input variable and returned
+        as an Array.</span
       >
 
       <div class="grid gap-y-3">
-        <common-basic-module />
-        <common-input-module />
-        <common-prompt-module />
-        <common-output-module />
+        <common-input-module static-name-key="Query" />
+        <common-knowledge-module />
+        <static-output-module
+          tip="The output list is the information that best match the input parameters, recalled from all selected knowledge"
+          :data="[
+            {
+              label: 'outputList',
+              type: 'Array<Object>',
+              children: [
+                {
+                  label: 'output',
+                  type: 'string'
+                }
+              ]
+            }
+          ]"
+        />
       </div>
     </div>
     <Handle type="source" :position="Position.Right" />

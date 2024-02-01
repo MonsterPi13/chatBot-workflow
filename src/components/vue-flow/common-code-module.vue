@@ -9,7 +9,7 @@ import MonacoEditor from '../monaco-editor.vue'
 const isOpen = ref(true)
 
 const code = ref(
-  'async function main({ params }: Args): Promise<Output> {\n    const ret = {\n        "key0": params.input + params.input,\n             }\n        }]\n    };\n    return ret;\n}'
+  'async function main({ params }: Args): Promise<Output> {\n    const ret = {\n        "key0": params.input + params.input,\n                      };\n    return ret;\n}'
 )
 </script>
 
