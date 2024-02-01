@@ -43,6 +43,7 @@ These steps will get you started:
 - [Vue Flow](https://vueflow.dev/) - Flowchart
 - [Vue.js](https://vuejs.org/) - Framework
 - [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Shadcn-vue](https://www.shadcn-vue.com/) - UI components
 - [Vite](https://vitejs.dev/) - Build tool
 
 ## Contributing
