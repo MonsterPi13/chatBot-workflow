@@ -1,11 +1,13 @@
 # Vue Flow Quickstart and Best Practices🚀
 
 This project demonstrates how to build workflow applications with Vue Flow and Vue.js.
+
+<br> 
+<br>
 <img src="cover.png" alt="cover" style="border-radius: 12px; border: 1px solid #e5e7eb" />
 
+<br> 
 <br>
-<br>
-
 ## Introduction
 
 Vue Flow is a library for building flowchart and workflow diagrams with Vue.js. This project shows how to quickly get
