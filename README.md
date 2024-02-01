@@ -1,63 +1,50 @@
-# Vue Flow Quickstart and Best Practices🚀
+# Vue Flow Quickstart and Best Practices 🚀
 
-This project demonstrates how to build workflow applications with Vue Flow and Vue.js.
+This project demonstrates building workflow apps with Vue Flow and Vue.js.
 
-<br> 
-<br>
-<img src="cover.png" alt="cover" style="border-radius: 12px; border: 1px solid #e5e7eb" />
+<img src="cover.png"/>
 
-<br> 
-<br>
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Demo](#demo)
+- [Getting Started](#getting-started)
+- [Tech Stack](#tech-stack)
+- [Contributing](#contributing)
+
 ## Introduction
 
-Vue Flow is a library for building flowchart and workflow diagrams with Vue.js. This project shows how to quickly get
-started with Vue Flow and use it effectively by following best practices.
+Vue Flow is a library for flowchart diagrams. This project shows quickstart and best practices:
 
-Key concepts covered:
-
-- Drag and drop workflow nodes🖱
-- Connect nodes by dragging ➡️
-- Customize nodes as Vue components ⚙️
-- Pass data between nodes📤
-- Save and restore workflows💾
+- Drag and drop nodes 🖱
+- Connect nodes ➡️
+- Customize nodes ⚙️
+- Pass data between nodes 📤
+- Save/restore workflows 💾
 
 ## Demo
 
-[https://chat-bot-workflow.vercel.app/](https://chat-bot-workflow.vercel.app/) Try the live demo 🖥 to see the workflow
-application in action.
+https://chat-bot-workflow.vercel.app/
 
-## Getting Started 🏁
+Try the live demo 🖥
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing
-purposes.
+## Getting Started
 
-Prerequisites 📋
+These steps will get you started:
 
-- Node.js(v16 or above) and pnpm
+- Prerequisites: Node.js (v16+) and pnpm
+- Clone the repo
+- Install dependencies with `pnpm install`
+- Start dev server with `pnpm run dev`
+- App will be at http://localhost:5173/
 
-Installing ⬇️
+## Tech Stack
 
-Clone the repo
+- [Vue Flow](https://vueflow.dev/) - Flowchart
+- [Vue.js](https://vuejs.org/) - Framework
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Vite](https://vitejs.dev/) - Build tool
 
-```
-git clone https://github.com/MonsterPi13/chatBot-workflow.git
-```
+## Contributing
 
-Install dependencies
-
-```
-pnpm install
-```
-
-Run development server ▶️
-
-```
-pnpm run dev
-```
-
-The app will be served at [http://localhost:5173/](http://localhost:5173/)
-
-## Built With
-
-- [Vue Flow](https://vueflow.dev/) - Flowchart library
-- [Vue.js](https://vuejs.org/) - Web framework
+Feel free to open PRs to contribute fixes or improvements!
